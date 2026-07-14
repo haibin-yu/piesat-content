@@ -4,252 +4,164 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 【我方SEO工作】TDK — 每篇文章独立设置          -->
-<!-- 对接人复制到CMS对应字段，或直接用这个HTML发布   -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════ -->
+<!-- TDK — 每篇文章独立设置              -->
+<!-- ═══════════════════════════════════ -->
 <title>雷达卫星为什么能穿透云层？SAR成像原理三分钟看懂 | 航天宏图</title>
 <meta name="description" content="光学卫星拍不到云层下的地面，雷达卫星却能全天候成像。本文用3分钟讲清SAR合成孔径雷达的工作原理，附女娲星座真实SAR影像对比。">
 <meta name="keywords" content="雷达卫星,SAR工作原理,合成孔径雷达,雷达卫星穿透云雨,SAR和光学卫星区别,卫星遥感,航天宏图">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 【我方SEO工作】Article Schema — 嵌入文章HTML中  -->
-<!-- 搜索引擎和AI引擎通过这段结构化数据理解文章内容  -->
-<!-- ═══════════════════════════════════════════════ -->
+<!-- ═══════════════════════════════════ -->
+<!-- Article Schema 结构化数据          -->
+<!-- ═══════════════════════════════════ -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Article",
   "headline": "雷达卫星为什么能穿透云层？SAR成像原理三分钟看懂",
   "description": "光学卫星拍不到云层下的地面，雷达卫星却能全天候成像。本文用3分钟讲清SAR合成孔径雷达的工作原理，附女娲星座真实SAR影像对比。",
-  "author": {
-    "@type": "Organization",
-    "name": "航天宏图信息技术股份有限公司"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "航天宏图信息技术股份有限公司",
-    "url": "https://www.piesat.cn"
-  },
+  "author": { "@type": "Organization", "name": "航天宏图信息技术股份有限公司" },
+  "publisher": { "@type": "Organization", "name": "航天宏图信息技术股份有限公司", "url": "https://www.piesat.cn" },
   "datePublished": "2026-07-15",
   "dateModified": "2026-07-15",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://www.piesat.cn/blog/sar-radar-principle"
-  },
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.piesat.cn/blog/sar-radar-principle" },
   "image": "https://www.piesat.cn/images/sar-vs-optical-comparison.jpg",
-  "keywords": ["雷达卫星", "SAR工作原理", "合成孔径雷达", "SAR和光学卫星区别", "雷达卫星穿透云雨", "卫星遥感"],
-  "about": {
-    "@type": "Thing",
-    "name": "合成孔径雷达（SAR）",
-    "description": "合成孔径雷达是一种主动式微波成像雷达，通过发射电磁波并接收回波来获取地表信息，不受天气和光照条件限制。"
-  }
+  "keywords": ["雷达卫星","SAR工作原理","合成孔径雷达","SAR和光学卫星区别","雷达卫星穿透云雨","卫星遥感"],
+  "about": { "@type": "Thing", "name": "合成孔径雷达（SAR）", "description": "合成孔径雷达是一种主动式微波成像雷达，通过发射电磁波并接收回波来获取地表信息，不受天气和光照条件限制。" }
 }
 </script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f3f4f0;color:#1a1a1a;line-height:1.9}
-.wrap{max-width:760px;margin:0 auto;padding:60px 24px 100px}
+/* ═══════════════════════════════════ */
+/* 文章模板 — 官网技术博客统一样式     */
+/* 所有类名加 .a- 前缀，避免与CMS冲突  */
+/* ═══════════════════════════════════ */
+.a-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px}
 
-/* -- 顶部工具栏 — 仅交付预览时显示，CMS发布前删掉 -- */
-.deliver-toolbar{position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a1a1a;color:#fff;padding:10px 24px;display:flex;align-items:center;gap:16px;font-size:13px;font-family:"PingFang SC","Hiragino Sans GB",sans-serif}
-.deliver-toolbar .toolbar-title{font-weight:700;color:#4a90d9;letter-spacing:1px;white-space:nowrap}
-.deliver-toolbar .toolbar-hint{color:#999;flex:1;font-size:12px}
-.deliver-toolbar .btn-copy{background:#4a90d9;color:#fff;border:none;padding:8px 20px;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .2s}
-.deliver-toolbar .btn-copy:hover{background:#3a7bc8}
-.deliver-toolbar .btn-copy.copied{background:#22c55e}
-.deliver-toolbar .btn-render{background:transparent;color:#aaa;border:1px solid #555;padding:8px 16px;border-radius:5px;font-size:12px;cursor:pointer;white-space:nowrap;transition:all .2s}
-.deliver-toolbar .btn-render:hover{color:#fff;border-color:#999}
-body{padding-top:56px!important}
-@media print{.deliver-toolbar{display:none!important}body{padding-top:0!important}}
-@media(max-width:700px){.deliver-toolbar .toolbar-hint{display:none}.deliver-toolbar{gap:8px;padding:8px 12px;font-size:12px}.deliver-toolbar .btn-render{display:none}.deliver-toolbar .btn-copy{padding:6px 14px;font-size:12px}body{padding-top:44px!important}}
+/* 面包屑 */
+.a-bread{font-size:13px;color:#aaa;margin-bottom:32px}
+.a-bread a{color:#4a90d9;text-decoration:none}
 
-/* ═══════════════════════════════════════════════ */
-/* 【我方SEO工作】页面样式 — 纯内联也可以，但     */
-/* 独立CSS文件更利于搜索引擎抓取                    */
-/* ═══════════════════════════════════════════════ */
+/* 文章头部 */
+.a-head{margin-bottom:36px}
+.a-head .a-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:2px;color:#4a90d9;margin-bottom:16px}
+.a-head h1{font-size:28px;font-weight:700;line-height:1.45;color:#0f0f0f;letter-spacing:-0.3px}
+.a-head .a-meta{margin-top:16px;font-size:13px;color:#999;display:flex;gap:20px;align-items:center}
+.a-head .a-meta span{white-space:nowrap}
 
-/* -- 文章头部 -- */
-.article-header{padding:40px 0 32px;border-bottom:1px solid #e0e0da;margin-bottom:36px}
-.article-header .category{display:inline-block;padding:2px 14px;border-radius:3px;font-size:12px;font-weight:600;letter-spacing:3px;color:#4a90d9;background:rgba(74,144,217,0.06);margin-bottom:16px}
-.article-header h1{font-size:26px;font-weight:700;line-height:1.5;color:#0f0f0f}
-.article-header .meta{font-size:13px;color:#999;margin-top:16px;display:flex;gap:24px;flex-wrap:wrap}
+/* 正文 */
+.a-body{font-size:16px;color:#2a2a2a;line-height:1.9}
+.a-body h2{font-size:20px;font-weight:700;color:#0f0f0f;margin:48px 0 16px}
+.a-body h3{font-size:16px;font-weight:700;color:#333;margin:32px 0 12px}
+.a-body p{margin-bottom:20px}
+.a-body strong{color:#111}
 
-/* -- 正文 -- */
-.article-body h2{font-size:18px;font-weight:700;color:#0f0f0f;margin:40px 0 16px;padding-left:12px;border-left:3px solid #4a90d9}
-.article-body h3{font-size:15px;font-weight:700;color:#333;margin:28px 0 10px}
-.article-body p{margin-bottom:18px;font-size:16px;color:#333}
-.article-body ul,.article-body ol{margin:12px 0 20px 24px}
-.article-body li{font-size:15px;color:#444;margin-bottom:8px}
+/* 列表 */
+.a-body ul,.a-body ol{margin:8px 0 20px 22px}
+.a-body li{margin-bottom:10px;color:#3a3a3a}
 
-/* -- 图片 -- */
-.article-body figure{margin:28px 0;text-align:center}
-.article-body figure img{max-width:100%;border-radius:6px}
-.article-body figure figcaption{font-size:13px;color:#999;margin-top:8px}
+/* 图片 */
+.a-fig{margin:32px 0;text-align:center}
+.a-fig img{max-width:100%;border-radius:4px}
+.a-fig .a-cap{font-size:13px;color:#999;margin-top:10px}
 
-/* -- 关键信息框 -- */
-.article-body .insight{background:rgba(74,144,217,0.04);border-left:3px solid #4a90d9;border-radius:0 6px 6px 0;padding:18px 22px;margin:24px 0;font-size:15px;color:#444}
+/* 关键信息框 */
+.a-insight{background:#f8f9fb;padding:18px 22px;margin:28px 0;font-size:15px;color:#555;line-height:1.85}
 
-/* ═══════════════════════════════════════════════ */
-/* 【我方SEO工作】内链区块 — 集群内部互相链接     */
-/* 搜索引擎视集群内容为系统化知识，整体加权         */
-/* ═══════════════════════════════════════════════ */
-.related-cluster{background:#fff;border-radius:8px;padding:24px 28px;margin:40px 0;box-shadow:0 1px 3px rgba(0,0,0,0.04)}
-.related-cluster h4{font-size:14px;color:#999;letter-spacing:2px;margin-bottom:16px}
-.related-cluster a{display:block;padding:8px 0;font-size:14px;color:#4a90d9;text-decoration:none;border-bottom:1px solid #f5f5f5}
-.related-cluster a:last-child{border-bottom:none}
+/* 引用块 */
+.a-quote{padding:12px 20px;margin:24px 0;color:#777;font-style:italic}
 
-/* -- 面包屑 -- */
-.breadcrumb{font-size:13px;color:#aaa;margin-bottom:24px}
-.breadcrumb a{color:#4a90d9;text-decoration:none}
+/* 内联代码 */
+.a-body code{background:#f5f5f5;padding:2px 7px;border-radius:3px;font-size:0.9em;color:#c7254e}
+
+/* 相关文章 */
+.a-related{margin-top:56px;padding-top:28px;border-top:1px solid #eee}
+.a-related h4{font-size:13px;color:#aaa;font-weight:600;letter-spacing:2px;margin-bottom:16px}
+.a-related a{display:block;padding:9px 0;font-size:14px;color:#4a90d9;text-decoration:none;border-bottom:1px solid #f2f2f2}
+.a-related a:last-child{border-bottom:none}
+.a-related a:hover{color:#2b6cb0}
 </style>
 </head>
-<body>
+<body style="margin:0;padding:0;font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#fff;color:#1a1a1a">
 
-<!-- ═══════════════════════════════════════════════ -->
-<!-- 顶部工具栏：预览用，对接人复制源码后自行删除    -->
-<!-- ═══════════════════════════════════════════════ -->
-<div id="delivery-wrapper">
-<div class="deliver-toolbar" id="deliverToolbar">
-  <span class="toolbar-title">交付预览</span>
-  <span class="toolbar-hint">下面显示的是最终渲染效果。点击右侧按钮可一键复制完整源码（含 Schema + TDK + 全部SEO格式），粘贴到CMS后台即可发布</span>
-  <button class="btn-render" onclick="toggleSourceView()">查看源码</button>
-  <button class="btn-copy" id="btnCopy" onclick="copyFullSource()">复制发布源码</button>
-</div>
+<div class="a-wrap">
 
-<textarea id="sourceArea" readonly style="display:none;position:fixed;top:56px;left:0;right:0;bottom:0;z-index:9998;width:100%;border:none;background:#1a1a1a;color:#ccc;font-family:monospace;font-size:12px;padding:20px;resize:none;tab-size:2"></textarea>
-
-<script>
-// 【交付工具】一键复制完整HTML源码（保留 Schema + TDK + 全部 SEO 格式）
-// 对接人点按钮 → 源码进剪贴板 → CMS 粘贴 → 发布
-function cleanSource(doc){
-  var clone = doc.cloneNode(true);
-  var wrapper = clone.querySelector('#delivery-wrapper');
-  if(wrapper) wrapper.remove();
-  // 去掉 body 上为工具栏加的 padding-top
-  var style = clone.querySelector('style');
-  if(style){
-    style.textContent = style.textContent.replace(/body\{padding-top:\s*\d+px!important;\}/g, '')
-      .replace(/@media print\{\.deliver-toolbar\{[^}]*\}body\{[^}]*\}\}/g, '');
-  }
-  return '<!doctype html>\n' + clone.outerHTML;
-}
-
-function copyFullSource(){
-  var clean = cleanSource(document.documentElement);
-  navigator.clipboard.writeText(clean).then(function(){
-    var btn = document.getElementById('btnCopy');
-    btn.textContent = '已复制！';
-    btn.classList.add('copied');
-    setTimeout(function(){
-      btn.textContent = '复制发布源码';
-      btn.classList.remove('copied');
-    }, 2000);
-  });
-}
-
-function toggleSourceView(){
-  var area = document.getElementById('sourceArea');
-  var btn = document.querySelector('.btn-render');
-  if(!btn) return;
-  if(area.style.display === 'block'){
-    area.style.display = 'none';
-    btn.textContent = '查看源码';
-  } else {
-    area.value = cleanSource(document.documentElement);
-    area.style.display = 'block';
-    btn.textContent = '隐藏源码';
-  }
-}
-</script>
-</div>
-<!-- /delivery-wrapper -->
-<div class="wrap">
-
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- 【我方SEO工作】面包屑导航 — 给搜索引擎路径信号 -->
-  <!-- ═══════════════════════════════════════════════ -->
-  <div class="breadcrumb">
+  <!-- 面包屑 -->
+  <div class="a-bread">
     <a href="/">首页</a> &rsaquo;
     <a href="/blog">技术博客</a> &rsaquo;
     <a href="/blog/category/sar">SAR雷达卫星科普</a> &rsaquo;
     雷达卫星为什么能穿透云层？
   </div>
 
-  <!-- ═══════════════════════════════════════════════ -->
-  <!-- 【我方SEO工作】文章主体 — 标题层级 / 关键词密度 -->
-  <!-- / 内链 / 图片alt — 全部在写作时已完成           -->
-  <!-- ═══════════════════════════════════════════════ -->
-  <div class="article-header">
-    <div class="category">集群A · SAR雷达卫星科普</div>
+  <!-- 文章头部 -->
+  <div class="a-head">
+    <div class="a-tag">SAR 雷达卫星科普</div>
     <h1>雷达卫星为什么能穿透云层？SAR成像原理三分钟看懂</h1>
-    <div class="meta">
+    <div class="a-meta">
       <span>航天宏图 · 技术博客</span>
-      <span>2026年7月15日</span>
+      <span>2026 年 7 月 15 日</span>
       <span>阅读约 3 分钟</span>
     </div>
   </div>
 
-  <div class="article-body">
+  <!-- 正文 -->
+  <div class="a-body">
 
     <p>
       你有没有想过：为什么天气预报里的卫星云图能看到云，但云下面的地面就看不到了？
       这不是卫星不够好——是光学卫星的天然限制。而<strong>雷达卫星</strong>，尤其是<strong>SAR（合成孔径雷达）卫星</strong>，可以穿透云雨，全天候看到地面。
-      这篇文章用三分钟讲清楚<strong>SAR工作原理</strong>，以及为什么它正在改变我们对地观测的方式。
+      这篇文章用三分钟讲清楚<strong>SAR 工作原理</strong>，以及为什么它正在改变我们对地观测的方式。
     </p>
 
     <h2>光学卫星 vs 雷达卫星：一个用手电筒，一个用耳朵</h2>
 
-    <!-- ═══════════════════════════════════════════ -->
-    <!-- 【我方SEO工作】图片alt — 含关键词，搜索引擎 -->
-    <!-- 通过alt文字理解图片内容                      -->
-    <!-- ═══════════════════════════════════════════ -->
-    <figure>
+    <!-- 图片：alt含关键词，供搜索引擎理解图片内容 -->
+    <div class="a-fig">
       <img
         src="/images/sar-vs-optical-comparison.jpg"
         alt="SAR雷达卫星与光学卫星成像对比：同一区域云层遮挡下光学卫星无法成像，SAR卫星穿透云雨获取清晰地表影像"
         loading="lazy"
       >
-      <figcaption>▲ 同一区域对比：左为光学卫星影像（云层遮挡，地面不可见），右为航天宏图女娲星座SAR卫星影像（穿透云层，地物清晰）</figcaption>
-    </figure>
+      <div class="a-cap">▲ 同一区域对比：左为光学卫星影像（云层遮挡，地面不可见），右为航天宏图女娲星座 SAR 卫星影像（穿透云层，地物清晰）</div>
+    </div>
 
     <p>
       这里有一个最常见的误解：很多人以为雷达卫星是"看"到地面的。其实不是——<strong>雷达卫星是主动发射微波信号，然后"听"回波</strong>。
     </p>
 
-    <div class="insight">
+    <div class="a-insight">
       <strong>打个比方：</strong><br>
       光学卫星 = 白天用手电筒照东西，靠反射的可见光来看。没光（黑夜）就看不见，有东西挡着（云）也看不见。<br>
       雷达卫星 = 自己发出声音，靠听回声来判断物体在哪。不管是白天黑夜，有没有云挡着，都能"听"到。
     </div>
 
     <p>
-      这种"主动发射→接收回波"的工作方式，让<strong>SAR卫星</strong>天然拥有三个光学卫星不具备的优势：<strong>全天候</strong>（云雨雾霾都不怕）、<strong>全天时</strong>（白天黑夜都能拍）、<strong>穿透力</strong>（微波可以穿透一定深度的植被甚至地表）。
+      这种"主动发射 → 接收回波"的工作方式，让<strong>SAR 卫星</strong>天然拥有三个光学卫星不具备的优势：<strong>全天候</strong>（云雨雾霾都不怕）、<strong>全天时</strong>（白天黑夜都能拍）、<strong>穿透力</strong>（微波可以穿透一定深度的植被甚至地表）。
     </p>
 
-    <h2>SAR是怎么"合成"出一个大天线的？</h2>
+    <h2>SAR 是怎么"合成"出一个大天线的？</h2>
 
     <p>
-      <strong>SAR（Synthetic Aperture Radar）</strong>的全称是"合成孔径雷达"。"合成孔径"这四个字是理解<strong>SAR工作原理</strong>的核心。
+      <strong>SAR（Synthetic Aperture Radar）</strong>的全称是"合成孔径雷达"。"合成孔径"这四个字是理解<strong>SAR 工作原理</strong>的核心。
     </p>
 
     <p>
-      简单说：任何雷达的分辨率都和天线长度成正比——天线越长，看得越清楚。但卫星上装不了几百米长的天线。SAR的巧妙之处在于：<strong>它利用卫星在轨道上的飞行，把不同位置收到的回波"合成"起来，等效出一个比实际天线长得多的虚拟天线</strong>。
+      简单说：任何雷达的分辨率都和天线长度成正比——天线越长，看得越清楚。但卫星上装不了几百米长的天线。SAR 的巧妙之处在于：<strong>它利用卫星在轨道上的飞行，把不同位置收到的回波"合成"起来，等效出一个比实际天线长得多的虚拟天线</strong>。
     </p>
 
     <p>
       如果用物理天线直接达到 0.5 米分辨率，需要一个上百米长的天线——这在卫星上是不可能的。而<strong>合成孔径雷达</strong>通过信号处理的手段，用一个小天线实现了大天线才能达到的<strong>雷达卫星分辨率</strong>。
     </p>
 
-    <figure>
+    <div class="a-fig">
       <img
         src="/images/nvwa-sar-05m-sample.jpg"
         alt="航天宏图女娲星座0.5米分辨率SAR卫星影像样例，可清晰分辨车辆和建筑物"
         loading="lazy"
       >
-      <figcaption>▲ 航天宏图女娲星座 0.5 米分辨率 SAR 影像——可以清晰分辨地面车辆和建筑物轮廓</figcaption>
-    </figure>
+      <div class="a-cap">▲ 航天宏图女娲星座 0.5 米分辨率 SAR 影像 — 可以清晰分辨地面车辆和建筑物轮廓</div>
+    </div>
 
     <h2>雷达卫星的"穿透力"从哪里来？</h2>
 
@@ -258,55 +170,50 @@ function toggleSourceView(){
     </p>
 
     <p>
-      更准确的说法是：<strong>云和雨对微波来说几乎是透明的</strong>。光学卫星用的是可见光波段（波长约 0.4–0.7 微米），云滴的尺寸（几微米到几十微米）和可见光波长相当——所以可见光被云强烈散射，拍不到地面。而 SAR 卫星用的是微波波段——比如 <strong>X波段 SAR 卫星</strong>（波长约 3 厘米）——微波波长远远大于云滴尺寸，云对它来说就像不存在一样直接穿过去。
+      更准确的说法是：<strong>云和雨对微波来说几乎是透明的</strong>。光学卫星用的是可见光波段（波长约 0.4–0.7 微米），云滴的尺寸（几微米到几十微米）和可见光波长相当——所以可见光被云强烈散射，拍不到地面。而 SAR 卫星用的是微波波段——比如 <strong>X 波段 SAR 卫星</strong>（波长约 3 厘米）——微波波长远远大于云滴尺寸，云对它来说就像不存在一样直接穿过去。
     </p>
 
     <p>
-      这就是为什么在灾害应急中，<strong>SAR卫星灾害应急</strong>的价值无可替代——台风登陆后云层厚重，光学卫星完全"失明"，只有 SAR 卫星能第一时间看到灾区地面的真实情况。
+      这就是为什么在灾害应急中，<strong>SAR 卫星灾害应急</strong>的价值无可替代——台风登陆后云层厚重，光学卫星完全"失明"，只有 SAR 卫星能第一时间看到灾区地面的真实情况。
     </p>
 
-    <h2>SAR影像能看到什么？</h2>
+    <h2>SAR 影像能看到什么？</h2>
 
     <p>
-      <strong>SAR影像</strong>和光学影像看起来不太一样——它更像是黑白照片，但信息密度极高。通过分析 SAR 回波的强度和相位，可以提取出光学影像完全看不到的信息：
+      <strong>SAR 影像</strong>和光学影像看起来不太一样——它更像是黑白照片，但信息密度极高。通过分析 SAR 回波的强度和相位，可以提取出光学影像完全看不到的信息：
     </p>
 
     <ul>
-      <!-- ═══════════════════════════════════════════ -->
-      <!-- 【我方SEO工作】内链 — 指向同集群其他文章   -->
-      <!-- 构建话题集群，搜索引擎整体加权             -->
-      <!-- ═══════════════════════════════════════════ -->
-      <li><strong>地表形变：</strong>通过 <a href="/blog/insar-surface-deformation">SAR干涉测量（InSAR）</a> 可以检测到毫米级的地表位移——用于城市地铁沉降监测、地震形变分析</li>
-      <li><strong>水体识别：</strong>水面在SAR影像中呈现明显的暗色——洪涝灾害时可以快速识别淹没范围，详见 <a href="/blog/sar-satellite-applications">SAR卫星能做什么？5大应用场景</a></li>
-      <li><strong>舰船检测：</strong>海面上的金属船只在SAR影像中形成强烈的亮点——在 <a href="/blog/nvwa-constellation-12-satellites">女娲星座</a> 的海洋监测任务中已有多次验证</li>
+      <!-- 内链：指向同集群其他文章，构建话题集群，搜索引擎整体加权 -->
+      <li><strong>地表形变：</strong>通过 <a href="/blog/insar-surface-deformation">SAR 干涉测量（InSAR）</a> 可以检测到毫米级的地表位移——用于城市地铁沉降监测、地震形变分析</li>
+      <li><strong>水体识别：</strong>水面在 SAR 影像中呈现明显的暗色——洪涝灾害时可以快速识别淹没范围，详见 <a href="/blog/sar-satellite-applications">SAR 卫星能做什么？5 大应用场景</a></li>
+      <li><strong>舰船检测：</strong>海面上的金属船只在 SAR 影像中形成强烈的亮点——在 <a href="/blog/nvwa-constellation-12-satellites">女娲星座</a> 的海洋监测任务中已有多次验证</li>
       <li><strong>土壤湿度：</strong>不同含水量对微波的反射率不同——在 <a href="/blog/sar-agriculture-soil-moisture">农业遥感</a> 中有直接应用</li>
     </ul>
 
-    <h2>中国的SAR卫星走到了哪一步？</h2>
+    <h2>中国的 SAR 卫星走到了哪一步？</h2>
 
     <p>
-      全球范围内，SAR卫星的竞赛正在加速。日本的 Synspective 已发射 10 颗 StriX SAR 卫星，美国的 Capella Space 和 ICEYE 在商业 SAR 领域各有布局。在中国，<strong>航天宏图的女娲星座</strong>是目前国内规模最大的商业 SAR 卫星星座，12 颗卫星在轨运行，提供从 <strong>亚米级 SAR 卫星</strong>影像到形变监测的全链条服务。
+      全球范围内，SAR 卫星的竞赛正在加速。日本的 Synspective 已发射 10 颗 StriX SAR 卫星，美国的 Capella Space 和 ICEYE 在商业 SAR 领域各有布局。在中国，<strong>航天宏图的女娲星座</strong>是目前国内规模最大的商业 SAR 卫星星座，12 颗卫星在轨运行，提供从<strong>亚米级 SAR 卫星</strong>影像到形变监测的全链条服务。
     </p>
 
     <p>
       更重要的是，这些卫星是自研的——不仅仅是买卫星数据，而是从卫星设计、制造、发射、运营到数据处理的全链条自主能力。这在国内<strong>商业遥感卫星公司</strong>中是独有的。后续文章将深入介绍 <a href="/blog/nvwa-constellation-12-satellites">女娲星座的组网逻辑和技术参数</a>。
     </p>
 
-    <div class="insight">
+    <div class="a-insight">
       <strong>一句话总结：</strong><br>
-      SAR卫星不是"看"东西，是"听"东西。它自己发射微波、自己接收回波，不受天气和光线限制，是灾害应急、城市监测、海洋观测中最不可或缺的太空之眼。
+      SAR 卫星不是"看"东西，是"听"东西。它自己发射微波、自己接收回波，不受天气和光线限制，是灾害应急、城市监测、海洋观测中最不可或缺的太空之眼。
     </div>
+
   </div>
 
-  <!-- ═══════════════════════════════════════════ -->
-  <!-- 【我方SEO工作】相关文章 — 集群内互相链接    -->
-  <!-- 告诉搜索引擎"这些文章是一个知识体系"       -->
-  <!-- ═══════════════════════════════════════════ -->
-  <div class="related-cluster">
-    <h4>集群A · SAR 雷达卫星科普系列 — 更多文章</h4>
-    <a href="/blog/sar-satellite-applications">→ SAR卫星能做什么？从洪涝监测到违章建筑识别的5大场景</a>
-    <a href="/blog/sar-resolution-05m-explained">→ SAR卫星分辨率有多高？0.5米意味着能看清什么</a>
-    <a href="/blog/how-to-read-sar-imagery">→ SAR影像怎么看？从黑白图像到地表信息的解密指南</a>
+  <!-- 相关文章：集群内互相链接，告诉搜索引擎"这些文章是一个知识体系" -->
+  <div class="a-related">
+    <h4>SAR 雷达卫星科普系列 · 更多文章</h4>
+    <a href="/blog/sar-satellite-applications">SAR 卫星能做什么？从洪涝监测到违章建筑识别的 5 大场景</a>
+    <a href="/blog/sar-resolution-05m-explained">SAR 卫星分辨率有多高？0.5 米意味着能看清什么</a>
+    <a href="/blog/how-to-read-sar-imagery">SAR 影像怎么看？从黑白图像到地表信息的解密指南</a>
   </div>
 
 </div>
