@@ -80,9 +80,48 @@
 .a-related a{display:block;padding:9px 0;font-size:14px;color:#4a90d9;text-decoration:none;border-bottom:1px solid #f2f2f2}
 .a-related a:last-child{border-bottom:none}
 .a-related a:hover{color:#2b6cb0}
+
+/* -- 顶部工具栏，CMS发布前对接人删掉 -- */
+.tb-bar{position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a1a1a;color:#fff;padding:8px 20px;display:flex;align-items:center;gap:12px;font-size:12px;font-family:"PingFang SC","Hiragino Sans GB",sans-serif}
+.tb-bar .tb-title{font-weight:700;color:#4a90d9;letter-spacing:1px;white-space:nowrap}
+.tb-bar .tb-btn{background:#4a90d9;color:#fff;border:none;padding:6px 16px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
+.tb-bar .tb-btn.copied{background:#22c55e}
+.tb-bar .tb-btn-outline{background:transparent;color:#aaa;border:1px solid #555;padding:6px 14px;border-radius:4px;font-size:11px;cursor:pointer;white-space:nowrap}
+body{padding-top:42px}
+@media(print){.tb-bar{display:none!important}body{padding-top:0}}
+@media(max-width:700px){.tb-bar .tb-btn-outline{display:none}.tb-bar{padding:6px 12px;gap:8px}.tb-bar .tb-btn{padding:5px 12px;font-size:11px}body{padding-top:38px}}
 </style>
 </head>
 <body style="margin:0;padding:0;font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#fff;color:#1a1a1a">
+
+<div id="tb-wrapper">
+<div class="tb-bar">
+  <span class="tb-title">交付预览</span>
+  <span style="flex:1"></span>
+  <button class="tb-btn-outline" onclick="viewSource()">查看源码</button>
+  <button class="tb-btn" id="copyBtn" onclick="copySource()">复制发布源码</button>
+</div>
+<textarea id="srcArea" readonly style="display:none;position:fixed;top:42px;left:0;right:0;bottom:0;z-index:9998;width:100%;border:none;background:#1a1a1a;color:#ccc;font-family:monospace;font-size:12px;padding:20px;resize:none;tab-size:2"></textarea>
+<script>
+function clean(){
+  var c=document.documentElement.cloneNode(true);
+  var w=c.querySelector('#tb-wrapper'); if(w) w.remove();
+  var s=c.querySelector('style'); if(s) s.textContent=s.textContent.replace(/body\{padding-top:\d+px\}/g,'').replace(/@media\(print\)\{[^}]*body\{[^}]*\}\}/g,'').replace(/@media\(max-width:700px\)\{[^}]*body\{[^}]*\}\}/g,'');
+  return '<!doctype html>\n'+c.outerHTML;
+}
+function copySource(){
+  navigator.clipboard.writeText(clean()).then(function(){
+    var b=document.getElementById('copyBtn'); b.textContent='已复制！'; b.classList.add('copied');
+    setTimeout(function(){ b.textContent='复制发布源码'; b.classList.remove('copied'); },2000);
+  });
+}
+function viewSource(){
+  var a=document.getElementById('srcArea');
+  if(a.style.display==='block'){ a.style.display='none'; return; }
+  a.value=clean(); a.style.display='block';
+}
+</script>
+</div>
 
 <div class="a-wrap">
 
