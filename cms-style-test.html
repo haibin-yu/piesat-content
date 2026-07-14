@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>CMS样式放行测试</title>
+<style>
+body{margin:0;padding:40px;font-family:"PingFang SC",sans-serif;background:#fff}
+.test-box{padding:20px;margin:12px 0;border-radius:6px;text-align:center;font-size:15px;font-weight:700}
+/* 第1个：解析CSS */
+.test-css{background:#4a90d9;color:#fff}
+/* 第2个：不解析 */
+.test-nocss{color:#999}
+/* 如果<style>被过滤，两个box都不显示背景和颜色 */
+</style>
+</head>
+<body>
+
+<h2 style="color:#333">CMS 样式标签放行测试</h2>
+
+<div style="background:#f5f5f5;border:1px solid #ddd;padding:20px;border-radius:6px;margin:16px 0">
+
+  <!-- 测试1：style标签是否解析 -->
+  <div class="test-box test-css" style="border:1px dashed #4a90d9">
+    ① 如果这个框是蓝底白字 → &lt;style&gt; 标签解析正常 ✅
+  </div>
+
+  <div style="background:#f5f5f5;padding:12px;margin:8px 0;font-size:13px;color:#999;border-radius:4px">
+    如果这个框是白底灰字（没有蓝底）→ &lt;style&gt; 标签被过滤 ❌<br>
+    如果 class="test-css" 没有效果 → CSS类名选择器失效，但内联 style 有效
+  </div>
+
+  <!-- 测试2：class名是否保留 -->
+  <div class="test-box test-nocss" style="border:1px dashed #ddd">
+    ② 用浏览器开发者工具(F12)检查这个框还有 class="test-box test-nocss" 吗？
+  </div>
+
+  <div style="background:#f5f5f5;padding:12px;margin:8px 0;font-size:13px;color:#999;border-radius:4px">
+    class 名被删了或改了 → CMS 编辑器自动重写 class ❌<br>
+    class 名保持不变 → CMS 保留了自定义 class ✅
+  </div>
+
+  <!-- 测试3：script标签是否保留 -->
+  <div style="border:1px dashed #ddd;padding:12px;margin:8px 0;font-size:13px;color:#999;border-radius:6px">
+    ③ 打开浏览器开发者工具(F12)查看页面HTML源码，搜索 <code style="background:#fce4ec;padding:2px 5px;border-radius:2px">script type="application/ld+json"</code> 是否存在<br>
+    如果存在 → &lt;script&gt; 标签放行 ✅<br>
+    如果不存在 → &lt;script&gt; 标签被过滤 ❌
+  </div>
+
+</div>
+
+<script type="application/ld+json">
+{"@type":"WebPage","name":"CMS测试","description":"用于检测CMS是否保留script标签"}
+</script>
+
+<p style="font-size:13px;color:#aaa;margin-top:24px">测试完成。请将上述结果反馈给我们。</p>
+</body>
+</html>
