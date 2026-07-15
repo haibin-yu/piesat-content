@@ -3,9 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+
+<!-- ═══════════════════════════════════ -->
+<!-- TDK — 每篇文章独立设置              -->
+<!-- ═══════════════════════════════════ -->
 <title>雷达卫星为什么能穿透云层？SAR成像原理三分钟看懂 | 航天宏图</title>
 <meta name="description" content="光学卫星拍不到云层下的地面，雷达卫星却能全天候成像。本文用3分钟讲清SAR合成孔径雷达的工作原理，附女娲星座真实SAR影像对比。">
 <meta name="keywords" content="雷达卫星,SAR工作原理,合成孔径雷达,雷达卫星穿透云雨,SAR和光学卫星区别,卫星遥感,航天宏图">
+
+<!-- ═══════════════════════════════════ -->
+<!-- Article Schema 结构化数据          -->
+<!-- ═══════════════════════════════════ -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -22,35 +30,58 @@
   "about": { "@type": "Thing", "name": "合成孔径雷达（SAR）", "description": "合成孔径雷达是一种主动式微波成像雷达，通过发射电磁波并接收回波来获取地表信息，不受天气和光照条件限制。" }
 }
 </script>
+
 <style>
+/* ═══════════════════════════════════ */
+/* 文章模板 — 官网技术博客统一样式     */
+/* 所有类名加 .a- 前缀，避免与CMS冲突  */
+/* ═══════════════════════════════════ */
 .a-wrap{max-width:760px;margin:0 auto;padding:48px 24px 80px}
+
+/* 面包屑 */
 .a-bread{font-size:13px;color:#aaa;margin-bottom:32px}
 .a-bread a{color:#4a90d9;text-decoration:none}
+
+/* 文章头部 */
 .a-head{margin-bottom:36px}
 .a-head .a-tag{display:inline-block;font-size:11px;font-weight:600;letter-spacing:2px;color:#4a90d9;margin-bottom:16px}
 .a-head h1{font-size:28px;font-weight:700;line-height:1.45;color:#0f0f0f;letter-spacing:-0.3px}
 .a-head .a-meta{margin-top:16px;font-size:13px;color:#999;display:flex;gap:20px;align-items:center}
 .a-head .a-meta span{white-space:nowrap}
+
+/* 正文 */
 .a-body{font-size:16px;color:#2a2a2a;line-height:1.9}
 .a-body h2{font-size:20px;font-weight:700;color:#0f0f0f;margin:48px 0 16px}
 .a-body h3{font-size:16px;font-weight:700;color:#333;margin:32px 0 12px}
 .a-body p{margin-bottom:20px}
 .a-body strong{color:#111}
+
+/* 列表 */
 .a-body ul,.a-body ol{margin:8px 0 20px 22px}
 .a-body li{margin-bottom:10px;color:#3a3a3a}
+
+/* 图片 */
 .a-fig{margin:32px 0;text-align:center}
 .a-fig img{max-width:100%;border-radius:4px}
 .a-fig .a-cap{font-size:13px;color:#999;margin-top:10px}
+
+/* 关键信息框 — 与正文一致，不做视觉突出 */
 .a-insight{margin:24px 0;font-size:15px;color:#555;line-height:1.85}
+
+/* 引用块 */
 .a-quote{padding:12px 20px;margin:24px 0;color:#777;font-style:italic}
+
+/* 内联代码 */
 .a-body code{background:#f5f5f5;padding:2px 7px;border-radius:3px;font-size:0.9em;color:#c7254e}
+
+/* 相关文章 */
 .a-related{margin-top:56px;padding-top:28px;border-top:1px solid #eee}
 .a-related h4{font-size:13px;color:#aaa;font-weight:600;letter-spacing:2px;margin-bottom:16px}
 .a-related a{display:block;padding:9px 0;font-size:14px;color:#4a90d9;text-decoration:none;border-bottom:1px solid #f2f2f2}
 .a-related a:last-child{border-bottom:none}
 .a-related a:hover{color:#2b6cb0}
 
-/* 工具栏 */
+/* -- 顶部工具栏，CMS发布前对接人删掉 -- */
 .tb-bar{position:fixed;top:0;left:0;right:0;z-index:9999;background:#1a1a1a;color:#fff;padding:8px 20px;display:flex;align-items:center;gap:12px;font-size:12px;font-family:"PingFang SC","Hiragino Sans GB",sans-serif}
 .tb-bar .tb-title{font-weight:700;color:#4a90d9;letter-spacing:1px;white-space:nowrap}
 .tb-bar .tb-btn{background:#4a90d9;color:#fff;border:none;padding:6px 16px;border-radius:4px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap}
@@ -59,9 +90,6 @@
 body{padding-top:42px}
 @media(print){.tb-bar{display:none!important}body{padding-top:0}}
 @media(max-width:700px){.tb-bar .tb-btn-outline{display:none}.tb-bar{padding:6px 12px;gap:8px}.tb-bar .tb-btn{padding:5px 12px;font-size:11px}body{padding-top:38px}}
-
-/* 图片路径标注（仅测试版显示） */
-.img-tag{display:inline-block;background:#fce4ec;color:#c62828;font-size:11px;padding:2px 8px;border-radius:3px;margin-top:8px;font-family:monospace}
 </style>
 </head>
 <body style="margin:0;padding:0;font-family:'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif;background:#fff;color:#1a1a1a">
@@ -78,7 +106,7 @@ body{padding-top:42px}
 function clean(){
   var c=document.documentElement.cloneNode(true);
   var w=c.querySelector('#tb-wrapper'); if(w) w.remove();
-  var s=c.querySelector('style'); if(s) s.textContent=s.textContent.replace(/body\{padding-top:\d+px\}/g,'').replace(/@media\(print\)\{[^}]*body\{[^}]*\}\}/g,'').replace(/@media(max-width:700px\)\{[^}]*body\{[^}]*\}\}/g,'');
+  var s=c.querySelector('style'); if(s) s.textContent=s.textContent.replace(/body\{padding-top:\d+px\}/g,'').replace(/@media\(print\)\{[^}]*body\{[^}]*\}\}/g,'').replace(/@media\(max-width:700px\)\{[^}]*body\{[^}]*\}\}/g,'');
   return '<!doctype html>\n'+c.outerHTML;
 }
 function copySource(){
@@ -97,6 +125,7 @@ function viewSource(){
 
 <div class="a-wrap">
 
+  <!-- 面包屑 -->
   <div class="a-bread">
     <a href="/">首页</a> &rsaquo;
     <a href="/blog">技术博客</a> &rsaquo;
@@ -104,6 +133,7 @@ function viewSource(){
     雷达卫星为什么能穿透云层？
   </div>
 
+  <!-- 文章头部 -->
   <div class="a-head">
     <div class="a-tag">SAR 雷达卫星科普</div>
     <h1>雷达卫星为什么能穿透云层？SAR成像原理三分钟看懂</h1>
@@ -114,6 +144,7 @@ function viewSource(){
     </div>
   </div>
 
+  <!-- 正文 -->
   <div class="a-body">
 
     <p>
@@ -124,16 +155,14 @@ function viewSource(){
 
     <h2>光学卫星 vs 雷达卫星：一个用手电筒，一个用耳朵</h2>
 
-    <!-- ===== 图片1：使用可加载占位图测试布局 ===== -->
-    <!-- ===== 客户上传真实图片后替换 src 即可 ===== -->
+    <!-- 图片：alt含关键词，供搜索引擎理解图片内容 -->
     <div class="a-fig">
       <img
-        src="https://placehold.co/720x360/1a1a1a/4a90d9?text=SAR+卫星影像+vs+光学卫星影像+对比"
+        src="https://placehold.co/720x360/1a1a1a/4a90d9?text=SAR+%E5%8D%AB%E6%98%9F%E5%BD%B1%E5%83%8F+vs+%E5%85%89%E5%AD%A6%E5%8D%AB%E6%98%9F%E5%BD%B1%E5%83%8F+%E5%AF%B9%E6%AF%94"
         alt="SAR雷达卫星与光学卫星成像对比：同一区域云层遮挡下光学卫星无法成像，SAR卫星穿透云雨获取清晰地表影像"
         loading="lazy"
       >
       <div class="a-cap">▲ 同一区域对比：左为光学卫星影像（云层遮挡，地面不可见），右为航天宏图女娲星座 SAR 卫星影像（穿透云层，地物清晰）</div>
-      <div class="img-tag">上传图片后替换为：src="/images/sar-vs-optical-comparison.jpg"</div>
     </div>
 
     <p>
@@ -164,15 +193,13 @@ function viewSource(){
       如果用物理天线直接达到 0.5 米分辨率，需要一个上百米长的天线——这在卫星上是不可能的。而<strong>合成孔径雷达</strong>通过信号处理的手段，用一个小天线实现了大天线才能达到的<strong>雷达卫星分辨率</strong>。
     </p>
 
-    <!-- ===== 图片2 ===== -->
     <div class="a-fig">
       <img
-        src="https://placehold.co/720x360/1a1a1a/4a90d9?text=女娲星座+0.5m+分辨率+SAR+影像样例"
+        src="https://placehold.co/720x360/1a1a1a/4a90d9?text=%E5%A5%B3%E5%A8%B2%E6%98%9F%E5%BA%A7+0.5m+%E5%88%86%E8%BE%A8%E7%8E%87+SAR+%E5%BD%B1%E5%83%8F%E6%A0%B7%E4%BE%8B"
         alt="航天宏图女娲星座0.5米分辨率SAR卫星影像样例，可清晰分辨车辆和建筑物"
         loading="lazy"
       >
-      <div class="a-cap">▲ 航天宏图女娲星座 0.5 米分辨率 SAR 影像 — 可以清晰分辨地面车辆和建筑物轮廓</div>
-      <div class="img-tag">上传图片后替换为：src="/images/nvwa-sar-05m-sample.jpg"</div>
+      <div class="a-cap">▲ 航天宏图女娲星座 0.5 米分辨率 SAR 影像 — 可以清晰分辨地面车辆和建筑物轮廓</div><div style="display:inline-block;background:#fce4ec;color:#c62828;font-size:11px;padding:2px 8px;border-radius:3px;margin:8px 0 0;font-family:monospace">上传图片后替换为：src="/images/nvwa-sar-05m-sample.jpg"</div>
     </div>
 
     <h2>雷达卫星的"穿透力"从哪里来？</h2>
@@ -196,6 +223,7 @@ function viewSource(){
     </p>
 
     <ul>
+      <!-- 内链：指向同集群其他文章，构建话题集群，搜索引擎整体加权 -->
       <li><strong>地表形变：</strong>通过 <a href="/blog/insar-surface-deformation">SAR 干涉测量（InSAR）</a> 可以检测到毫米级的地表位移——用于城市地铁沉降监测、地震形变分析</li>
       <li><strong>水体识别：</strong>水面在 SAR 影像中呈现明显的暗色——洪涝灾害时可以快速识别淹没范围，详见 <a href="/blog/sar-satellite-applications">SAR 卫星能做什么？5 大应用场景</a></li>
       <li><strong>舰船检测：</strong>海面上的金属船只在 SAR 影像中形成强烈的亮点——在 <a href="/blog/nvwa-constellation-12-satellites">女娲星座</a> 的海洋监测任务中已有多次验证</li>
@@ -219,6 +247,7 @@ function viewSource(){
 
   </div>
 
+  <!-- 相关文章：集群内互相链接，告诉搜索引擎"这些文章是一个知识体系" -->
   <div class="a-related">
     <h4>SAR 雷达卫星科普系列 · 更多文章</h4>
     <a href="/blog/sar-satellite-applications">SAR 卫星能做什么？从洪涝监测到违章建筑识别的 5 大场景</a>
