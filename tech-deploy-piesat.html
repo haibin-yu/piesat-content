@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>航天宏图 · 全站SEO技术部署方案（第4周交付）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;background:#f3f4f0;color:#1a1a1a;line-height:1.85}
+.wrap{max-width:920px;margin:0 auto;padding:60px 24px 100px}
+
+.cover{text-align:center;padding:60px 0 50px;border-bottom:1px solid #d5d5d0}
+.cover .tag{display:inline-block;padding:3px 16px;border-radius:3px;font-size:12px;font-weight:600;letter-spacing:4px;color:#4a90d9;background:rgba(74,144,217,0.06);margin-bottom:20px}
+.cover h1{font-size:22px;font-weight:700;line-height:1.5;color:#0f0f0f}
+.cover .sub{font-size:14px;color:#888;margin-top:12px}
+.cover .meta{font-size:13px;color:#aaa;margin-top:20px}
+
+.section{margin-top:44px}
+.section-title{font-size:17px;font-weight:700;color:#0f0f0f;margin-bottom:20px;padding-left:14px;border-left:3px solid #4a90d9;line-height:1.4}
+
+ol,ul{margin-left:20px}
+ol li,ul li{font-size:14px;color:#444;margin-bottom:6px}
+p{font-size:14px;color:#444;margin-bottom:12px}
+
+.table-wrap{margin:16px 0 24px;overflow-x:auto}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{text-align:left;padding:10px 14px;color:#888;font-weight:600;font-size:12px;letter-spacing:1px;border-bottom:2px solid #e5e5e0;background:#fafaf9}
+tbody td{padding:10px 14px;border-bottom:1px solid #eee;color:#333;vertical-align:top}
+
+.code-block{background:#1a1a1a;color:#e0e0e0;font-family:"SF Mono","Menlo","Monaco",monospace;font-size:12px;padding:20px 24px;border-radius:6px;margin:16px 0;overflow-x:auto;line-height:1.7;white-space:pre-wrap;word-break:break-all}
+.code-label{font-size:12px;font-weight:700;color:#4a90d9;letter-spacing:1px;margin-bottom:8px;display:block}
+
+.note{background:#fff;border-radius:8px;padding:16px 20px;margin:16px 0;box-shadow:0 1px 3px rgba(0,0,0,0.04);font-size:14px;color:#555}
+
+.footer{margin-top:60px;padding-top:24px;border-top:1px solid #d5d5d0;text-align:center;font-size:12px;color:#bbb}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="cover">
+  <div class="tag">第 4 周交付物 · 技术部署方案</div>
+  <h1>航天宏图 piesat.cn<br>全站 SEO 技术部署方案</h1>
+  <div class="sub">含：4 套 Schema 代码 + 8 个子域名 TDK 补全清单 + robots.txt + sitemap 指南 + 部署验证清单<br>以下所有代码均可直接复制粘贴，IT 按顺序部署即可</div>
+  <div class="meta">2026 年 7 月 14 日</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 部署前说明 -->
+<!-- ═══════════════════════════════════ -->
+<div class="section">
+<div class="section-title">〇、部署前说明</div>
+<p>本方案覆盖 piesat.cn 全站范围，含首页、产品页、博客栏目和所有对外子域名。部署人员仅需具备网站后台模板编辑权限或服务器文件编辑权限。</p>
+
+<div class="note">
+<strong>部署总工时预估：</strong>约 2-4 小时（不含 CMS 功能开发）<br>
+<strong>部署顺序：</strong>Schema → TDK → robots.txt → sitemap<br>
+<strong>注意事项：</strong>所有代码部署后不要立即修改——先按本方案末尾的验证清单逐项确认通过，再进入下一步
+</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 一、Schema -->
+<!-- ═══════════════════════════════════ -->
+<div class="section">
+<div class="section-title">一、4 套 Schema JSON-LD 代码</div>
+<p>Schema 是给搜索引擎和 AI 引擎看的"身份信息"——告诉它们这个网站是谁、有什么产品、文章讲什么、常见问题是什么。以下代码全部粘贴到对应页面的 <code>&lt;head&gt;</code> 标签内。</p>
+
+<!-- Schema 1 -->
+<div style="margin-top:24px">
+<span class="code-label">Schema 1 · Organization（粘贴到网站首页 head 中）</span>
+<div class="code-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "航天宏图信息技术股份有限公司",
+  "alternateName": "Piesat",
+  "url": "https://www.piesat.cn",
+  "logo": "https://www.piesat.cn/images/logo.png",
+  "tickerSymbol": "688066",
+  "leiCode": "",
+  "description": "航天宏图是国内领先的卫星运营与应用服务提供商，拥有自研女娲星座SAR卫星星座和PIE-Engine遥感云平台，科创板上市企业。",
+  "foundingDate": "2008-01-24",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "北京",
+    "addressCountry": "CN"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "",
+    "contactType": "customer service"
+  },
+  "sameAs": []
+}
+&lt;/script&gt;</div>
+<p style="font-size:13px;color:#888">说明：斜体字段请公司补充——<code>leiCode</code>（全球法人识别编码，如有）、<code>telephone</code>（客服电话）、<code>logo</code>（确认 logo 图片路径）、<code>sameAs</code>（已开通的社交/投资平台官方链接，未开通的删掉为空数组）</p>
+</div>
+
+<!-- Schema 2 -->
+<div style="margin-top:24px">
+<span class="code-label">Schema 2 · SoftwareApplication（粘贴到 PIE-Engine 产品页 head 中）</span>
+<div class="code-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "PIE-Engine 遥感与地理信息云服务平台",
+  "applicationCategory": "BusinessApplication",
+  "operatingSystem": "Web",
+  "description": "PIE-Engine是航天宏图自主研发的遥感与地理信息云服务平台，支持在线遥感影像处理、SAR数据分析、AI解译和时空大数据计算。",
+  "url": "https://engine.piesat.cn",
+  "offers": {
+    "@type": "Offer",
+    "category": "SaaS"
+  },
+  "author": {
+    "@type": "Organization",
+    "name": "航天宏图信息技术股份有限公司",
+    "url": "https://www.piesat.cn"
+  }
+}
+&lt;/script&gt;</div>
+</div>
+
+<!-- Schema 3 -->
+<div style="margin-top:24px">
+<span class="code-label">Schema 3 · Article（博客文章模板）</span>
+<p>本 Schema <strong>已嵌入每篇文章的 HTML 中</strong>，IT 不需要在模板层额外部署。每篇文章交付时自带独立的 Article Schema（含 headline / description / author / datePublished / keywords / about 字段），对接人粘贴到 CMS 发布即可。</p>
+</div>
+
+<!-- Schema 4 -->
+<div style="margin-top:24px">
+<span class="code-label">Schema 4 · FAQ（粘贴到官网 FAQ 页面或首页 head 中）</span>
+<div class="code-block">&lt;script type="application/ld+json"&gt;
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "航天宏图是做什么的？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "航天宏图信息技术股份有限公司（688066）是国内领先的卫星运营与应用服务提供商，业务涵盖卫星制造、遥感数据处理、无人机低空遥感、行业应用解决方案。公司拥有自研女娲星座SAR卫星星座（在轨12颗）和PIE-Engine遥感云平台。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "什么是SAR卫星？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "SAR（合成孔径雷达）卫星是一种主动式微波遥感卫星，不受天气和光照条件限制，可实现全天候、全天时对地观测。航天宏图的女娲星座是中国目前规模最大的商业SAR卫星星座。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "PIE-Engine是什么？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "PIE-Engine是航天宏图自主研发的遥感与地理信息云服务平台，支持在线遥感影像处理、SAR数据分析、AI遥感解译和时空大数据计算。用户无需安装软件，通过浏览器即可完成遥感数据处理全流程。"
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "航天宏图的卫星数据用于哪些领域？",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "航天宏图的卫星遥感数据广泛应用于水利监测、灾害应急、林草管理、城市规划、农业监测、海洋观测等领域。"
+      }
+    }
+  ]
+}
+&lt;/script&gt;</div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 二、TDK -->
+<!-- ═══════════════════════════════════ -->
+<div class="section">
+<div class="section-title">二、8 个子域名 TDK 补全清单</div>
+<p>以下为每个子域名当前状态和建议修改值。IT 按清单逐个修改即可。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr>
+  <th style="width:18%">子域名</th>
+  <th style="width:10%">用途</th>
+  <th style="width:10%">当前状态</th>
+  <th style="width:31%">建议 Title</th>
+  <th style="width:31%">建议 Description</th>
+</tr></thead>
+<tbody>
+<tr>
+  <td><strong>www.piesat.cn</strong></td>
+  <td>官网首页</td>
+  <td>基本存在<br><span style="font-size:11px;color:#999">可优化</span></td>
+  <td style="font-size:13px">航天宏图 | 卫星运营与应用服务提供商 · 女娲星座SAR卫星 + PIE-Engine遥感云平台</td>
+  <td style="font-size:13px">航天宏图（688066）是国内领先的卫星运营与应用服务提供商，拥有自研女娲星座SAR卫星星座和PIE-Engine遥感云平台，提供从卫星制造到数据服务的全链条能力。</td>
+</tr>
+<tr>
+  <td><strong>engine.piesat.cn</strong></td>
+  <td>PIE-Engine</td>
+  <td>Keywords/Description 为空</td>
+  <td style="font-size:13px">PIE-Engine 遥感与地理信息云服务平台 | 航天宏图</td>
+  <td style="font-size:13px">PIE-Engine 是航天宏图自主研发的遥感云平台，支持在线遥感影像处理、SAR数据分析、AI遥感解译和时空大数据计算。无需安装，浏览器即可完成遥感数据处理全流程。</td>
+</tr>
+<tr>
+  <td><strong>engine-dev.piesat.cn</strong></td>
+  <td>PIE-Engine 开发版</td>
+  <td>Keywords/Description 为空</td>
+  <td style="font-size:13px">PIE-Engine 开发者平台 | 航天宏图</td>
+  <td style="font-size:13px">PIE-Engine 开发者平台，提供遥感云服务 API、SDK 和技术文档，支持开发者基于 PIE-Engine 构建遥感应用。</td>
+</tr>
+<tr>
+  <td><strong>factory.piesat.cn</strong></td>
+  <td>工厂/产线</td>
+  <td>全部为空</td>
+  <td style="font-size:13px">航天宏图 · 卫星与无人机制造基地</td>
+  <td style="font-size:13px">航天宏图在南通、辽宁、四平等地建有卫星及无人机研发生产基地，具备年产近千架无人机和卫星批量制造能力。</td>
+</tr>
+<tr>
+  <td><strong>edu.piesat.cn</strong></td>
+  <td>企业大学</td>
+  <td>全部为空</td>
+  <td style="font-size:13px">航天宏图企业大学 · PIE-Engine 遥感培训与认证</td>
+  <td style="font-size:13px">航天宏图企业大学提供 PIE-Engine 遥感平台操作培训、SAR卫星数据处理教程和 GIS 技术认证课程。</td>
+</tr>
+<tr>
+  <td><strong>znpt.piesat.cn</strong></td>
+  <td>智能中台</td>
+  <td>全部为空</td>
+  <td style="font-size:13px">航天宏图 · 时空大数据智能中台</td>
+  <td style="font-size:13px">航天宏图时空大数据智能中台，集成卫星遥感数据、无人机数据和地面物联网数据，提供AI驱动的时空分析能力。</td>
+</tr>
+<tr>
+  <td><strong>lvyou.piesat.cn</strong></td>
+  <td>旅游</td>
+  <td>全部为空</td>
+  <td style="font-size:13px">航天宏图 · 遥感赋能智慧旅游</td>
+  <td style="font-size:13px">航天宏图利用卫星遥感技术赋能智慧旅游，提供景区监测、人流量分析和自然遗产保护等遥感应用服务。</td>
+</tr>
+<tr>
+  <td><strong>oa.piesat.cn</strong></td>
+  <td>内部OA<br><span style="font-size:11px;color:#999">不对外</span></td>
+  <td>全部为空</td>
+  <td style="font-size:13px;color:#999">不修改</td>
+  <td style="font-size:13px;color:#999">建议在 head 中添加：<br>&lt;meta name="robots" content="noindex,nofollow"&gt;<br>禁止搜索引擎收录内部系统</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+<div class="note">
+<strong>部署方式：</strong>IT 登录各子域名对应的后台，找到页面模板的 <code>&lt;head&gt;</code> 区域，修改 <code>&lt;title&gt;</code> 和 <code>&lt;meta name="description"&gt;</code> 标签。<br>
+<strong>Keywords：</strong>如 CMS 支持则填入 3-5 个关键词（英文逗号分隔），不支持则忽略。<br>
+<strong>oa.piesat.cn：</strong>内部系统，不应被百度收录。添加 noindex 标签即可，无需补全 TDK。
+</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 三、robots.txt -->
+<!-- ═══════════════════════════════════ -->
+<div class="section">
+<div class="section-title">三、robots.txt 检查与修正</div>
+<p>目前 5 个子域名（factory/oa/edu/znpt/lvyou）百度收录为 0，需要排查是否被 robots.txt 误屏蔽。</p>
+
+<span class="code-label">第一步：排查现有限制</span>
+<ol>
+  <li>访问各子域名的 <code>/robots.txt</code>（如 <code>https://engine.piesat.cn/robots.txt</code>）</li>
+  <li>检查是否有 <code>Disallow: /</code> 拦截了所有爬虫</li>
+  <li>检查是否有 <code>User-agent: Baiduspider</code> + <code>Disallow: /</code> 专门拦截百度</li>
+</ol>
+
+<span class="code-label">第二步：按以下模板统一配置</span>
+<p>对外公开的子域名（www / engine / engine-dev / factory / edu / znpt / lvyou），根目录 robots.txt：</p>
+<div class="code-block">User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+Sitemap: https://www.piesat.cn/sitemap.xml</div>
+
+<p>内部系统（oa），根目录 robots.txt：</p>
+<div class="code-block">User-agent: *
+Disallow: /</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 四、sitemap -->
+<!-- ═══════════════════════════════════ -->
+<div class="section">
+<div class="section-title">四、sitemap.xml 生成与提交</div>
+
+<span class="code-label">第 1 步：生成 sitemap.xml</span>
+<ol>
+  <li>方式 A：如果 CMS 自带 sitemap 功能（WordPress + Yoast / Rank Math）→ 后台点击"生成 sitemap"</li>
+  <li>方式 B：使用在线工具（如 <code>xml-sitemaps.com</code>）→ 输入 <code>piesat.cn</code> → 下载生成的 sitemap.xml</li>
+  <li>上传 sitemap.xml 到网站根目录（如 <code>/var/www/html/sitemap.xml</code>）</li>
+</ol>
+
+<span class="code-label">第 2 步：提交到百度站长平台</span>
+<ol>
+  <li>登录百度站长平台（ziyuan.baidu.com）→ 选择已验证的 piesat.cn</li>
+  <li>左侧"数据引入"→"sitemap"→ 填入 <code>https://www.piesat.cn/sitemap.xml</code> → 提交</li>
+</ol>
+
+<span class="code-label">第 3 步：每次发布新文章后手动推送（对接人操作）</span>
+<ol>
+  <li>百度站长平台 →"普通收录"→"手动提交"</li>
+  <li>粘贴新文章 URL → 提交（每次约 20 秒）</li>
+</ol>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 五、验证清单 -->
+<!-- ═══════════════════════════════════ -->
+<div class="section">
+<div class="section-title">五、部署后验证清单</div>
+<p>IT 完成全部部署后，按此清单逐项验证。全部通过方可确认完成。</p>
+
+<div class="table-wrap">
+<table>
+<thead><tr><th style="width:5%">#</th><th>验证项</th><th style="width:30%">验证方法</th><th style="width:12%">预期结果</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>首页 Organization Schema</td><td>打开 piesat.cn → F12 → Elements → 搜索 <code>ld+json</code></td><td>找到 Organization Schema</td></tr>
+<tr><td>2</td><td>PIE-Engine Schema</td><td>打开 engine.piesat.cn → F12 → Elements → 搜索 <code>ld+json</code></td><td>找到 SoftwareApplication Schema</td></tr>
+<tr><td>3</td><td>FAQ Schema</td><td>打开 FAQ 页面 → F12 → Elements → 搜索 <code>FAQPage</code></td><td>找到 FAQ Schema</td></tr>
+<tr><td>4</td><td>Schema 语法校验</td><td>打开 <a href="https://search.google.com/test/rich-results" style="color:#4a90d9">Google 结构化数据测试工具</a> → 输入首页 URL</td><td>0 errors</td></tr>
+<tr><td>5</td><td>engine TDK</td><td>打开 engine.piesat.cn → 检查浏览器标签页标题</td><td>不再是空</td></tr>
+<tr><td>6</td><td>factory/edu/znpt/lvyou TDK</td><td>逐一打开各子域名 → 检查浏览器标签页标题</td><td>显示建议的标题</td></tr>
+<tr><td>7</td><td>oa 屏蔽搜索引擎</td><td>打开 oa.piesat.cn → F12 → Elements → 搜索 <code>noindex</code></td><td>找到 noindex 标签</td></tr>
+<tr><td>8</td><td>robots.txt 可访问</td><td>打开 piesat.cn/robots.txt</td><td>可访问，含 Sitemap 行</td></tr>
+<tr><td>9</td><td>sitemap.xml 可访问</td><td>打开 piesat.cn/sitemap.xml</td><td>可访问，显示 XML 页面列表</td></tr>
+<tr><td>10</td><td>sitemap 已提交</td><td>百度站长平台 → sitemap → 查看提交记录</td><td>显示已提交</td></tr>
+<tr><td>11</td><td>CDN 缓存刷新</td><td>如已启用 CDN，登录阿里云 CDN 控制台 → 手动刷新全站缓存</td><td>新 TDK 立即生效</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════ -->
+<!-- 六、效果预期 -->
+<!-- ═══════════════════════════════════ -->
+<div class="section">
+<div class="section-title">六、部署后预期效果</div>
+<div class="table-wrap">
+<table>
+<thead><tr><th>时间节点</th><th>预期变化</th></tr></thead>
+<tbody>
+<tr><td>部署后 1-2 周</td><td>百度重新抓取子域名页面，补全 TDK 的子域名在搜索结果中标题和描述开始更新</td></tr>
+<tr><td>部署后 2-4 周</td><td>Organization Schema 被 AI 引擎（豆包/DeepSeek）识别，公司信息开始出现在 AI 搜索结果中</td></tr>
+<tr><td>部署后 1 个月</td><td>sitemap 提交后百度收录速度加快，新文章发布后 1-2 天内被收录（之前可能需要 1-2 周）</td></tr>
+<tr><td>部署后 3 个月</td><td>Schema + sitemap + TDK 三管齐下，搜索结果展示效果优化：标题精准、描述有吸引力、搜索词匹配度提高</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div class="footer">
+<span>第 4 周交付物 · 全站 SEO 技术部署方案 · 2026 年 7 月 14 日</span>
+</div>
+
+</div>
+</body>
+</html>
