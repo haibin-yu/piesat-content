@@ -86,8 +86,8 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;b
 .footer{text-align:center;font-size:12px;color:#bbb;padding:32px 0;border-top:1px solid #eee}
 
 @media(max-width:700px){
-  .concept-grid{grid-template-columns:1fr;gap:20px}
-  .concept-grid .divider{display:none}
+  .concept-grid{grid-template-columns:1fr!important;gap:20px}
+  .concept-grid .divider{display:none!important}
   .do-grid{grid-template-columns:1fr}
   .tier-grid{grid-template-columns:1fr}
   .hero h1{font-size:24px}
@@ -265,7 +265,7 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;b
 
   <p style="margin-bottom:20px">搜索可见度建设的终点不是"数据好看"——是以下这些实际发生的改变。</p>
 
-  <div class="concept-grid" style="margin-bottom:40px">
+  <div class="concept-grid" style="margin-bottom:40px;grid-template-columns:1fr 1px 1fr 1px 1fr">
     <div class="concept">
       <h3><span class="tag tag-seo">传统搜索</span> 百度端</h3>
       <div style="font-size:13px;color:#555;line-height:2;margin-top:12px">
@@ -285,6 +285,17 @@ body{font-family:"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;b
         <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">AI 能在<strong style="color:#16a34a">合适的用户场景中推荐你</strong></div>
         <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">AI 为你建立<strong style="color:#16a34a">稳定且一致的品牌标签</strong></div>
         <div style="padding:6px 0">AI 在品牌对比中能够<strong style="color:#16a34a">体现你的竞争优势</strong></div>
+      </div>
+    </div>
+    <div class="divider"></div>
+    <div class="concept">
+      <h3><span style="display:inline-block;padding:3px 12px;border-radius:3px;font-size:13px;font-weight:600;margin-right:8px;vertical-align:middle;background:rgba(212,167,106,0.10);color:#b8860b">量化模型</span> 机构投研 AI</h3>
+      <div style="font-size:13px;color:#555;line-height:2;margin-top:12px">
+        <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">量化 NLP 模型<strong style="color:#b8860b">24小时自动抓取</strong>公开内容做情感分析</div>
+        <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">你的正面信息<strong style="color:#b8860b">进入模型的情感评分体系</strong></div>
+        <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">你的 Schema 结构化数据<strong style="color:#b8860b">被模型直接解析为另类数据</strong></div>
+        <div style="padding:6px 0;border-bottom:1px solid #f0f0f0">模型在筛选标的时<strong style="color:#b8860b">你的经营数据纳入考量</strong></div>
+        <div style="padding:6px 0">券商 AI 回答"这个行业有哪些标的"时<strong style="color:#b8860b">自然提到你</strong></div>
       </div>
     </div>
   </div>
