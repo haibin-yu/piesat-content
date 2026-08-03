@@ -79,11 +79,12 @@ async function copyArticleText(){
   var wrapper = document.createElement('div');
   var body = document.querySelector('.a-body');
   if(!body) return;
-  var children = body.children;
-  var imgPromises = [];
   
-  for(var i=0; i<children.length; i++){
-    var el = children[i];
+  // Build the structure and collect image URLs
+  var imgElements = [];
+  
+  for(var i=0; i<body.children.length; i++){
+    var el = body.children[i];
     var tag = el.tagName.toLowerCase();
     var text = el.textContent.trim();
     if(!text) continue;
@@ -104,7 +105,10 @@ async function copyArticleText(){
         imgClone.src = img.src;
         imgClone.alt = img.alt;
         imgClone.style.maxWidth = '100%';
+        imgClone.style.display = 'block';
+        imgClone.style.margin = '16px auto';
         wrapper.appendChild(imgClone);
+        imgElements.push({el: imgClone, url: img.src});
       }
       if(cap){
         var c = document.createElement('p');
@@ -121,40 +125,33 @@ async function copyArticleText(){
     }
   }
   
-  // Convert all img src to base64 data URIs and use text/html in clipboard
-  var imgs = wrapper.querySelectorAll('img');
-  var tasks = [];
-  imgs.forEach(function(img){
-    tasks.push(new Promise(function(resolve){
-      var canvas = document.createElement('canvas');
-      var ctx = canvas.getContext('2d');
-      var image = new Image();
-      image.crossOrigin = 'anonymous';
-      image.onload = function(){
-        canvas.width = image.naturalWidth;
-        canvas.height = image.naturalHeight;
-        ctx.drawImage(image, 0, 0);
-        try {
-          img.src = canvas.toDataURL('image/jpeg', 0.85);
-        } catch(e) {}
-        resolve();
-      };
-      image.onerror = function(){ resolve(); };
-      image.src = img.src;
-    }));
+  // Fetch images via fetch() + blob -> base64 (no canvas, no CORS issue)
+  var tasks = imgElements.map(function(item){
+    return fetch(item.url)
+      .then(function(r){ return r.blob(); })
+      .then(function(blob){
+        return new Promise(function(resolve){
+          var reader = new FileReader();
+          reader.onloadend = function(){
+            item.el.src = reader.result;
+            resolve();
+          };
+          reader.onerror = resolve;
+          reader.readAsDataURL(blob);
+        });
+      })
+      .catch(function(){ /* keep original URL */ });
   });
   
   await Promise.all(tasks);
   
-  var htmlContent = wrapper.innerHTML;
+  var htmlContent = '<html><body>' + wrapper.innerHTML + '</body></html>';
   
-  // ClipboardItem with text/html
   try {
     var htmlBlob = new Blob([htmlContent], {type: 'text/html'});
     await navigator.clipboard.write([new ClipboardItem({'text/html': htmlBlob})]);
     b.textContent = '已复制！';
   } catch(e){
-    // Fallback
     navigator.clipboard.writeText(wrapper.textContent);
     b.textContent = '已复制(仅文字)';
   }
