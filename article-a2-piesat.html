@@ -72,11 +72,16 @@ body{padding-top:42px}
 function clean(){var c=document.documentElement.cloneNode(true);var w=c.querySelector('#tb-wrapper');if(w)w.remove();return '<!doctype html>\n'+c.outerHTML;}
 function copySource(){navigator.clipboard.writeText(clean()).then(function(){var b=document.getElementById('copyBtn');b.textContent='已复制！';b.classList.add('copied');setTimeout(function(){b.textContent='复制发布源码';b.classList.remove('copied');},2000);});}
 function viewSource(){var a=document.getElementById('srcArea');if(a.style.display==='block'){a.style.display='none';return;}a.value=clean();a.style.display='block';}
-function copyArticleText(){
+async function copyArticleText(){
+  var b = document.getElementById('copyTextBtn');
+  b.textContent = '处理中...';
+  
   var wrapper = document.createElement('div');
   var body = document.querySelector('.a-body');
   if(!body) return;
   var children = body.children;
+  var imgPromises = [];
+  
   for(var i=0; i<children.length; i++){
     var el = children[i];
     var tag = el.tagName.toLowerCase();
@@ -116,29 +121,44 @@ function copyArticleText(){
     }
   }
   
-  // Write rich HTML to clipboard
-  var htmlContent = wrapper.innerHTML;
-  var textContent = wrapper.textContent;
-  
-  // Use Clipboard API with both HTML and plain text
-  var blob = new Blob([htmlContent], {type: 'text/html'});
-  var data = [new ClipboardItem({
-    'text/html': blob,
-    'text/plain': new Blob([textContent], {type: 'text/plain'})
-  })];
-  
-  navigator.clipboard.write(data).then(function(){
-    var b = document.getElementById('copyTextBtn');
-    b.textContent = '已复制！';
-    setTimeout(function(){ b.textContent = '复制文章内容'; }, 2000);
-  }).catch(function(){
-    // Fallback: just copy HTML as text
-    navigator.clipboard.writeText(textContent).then(function(){
-      var b = document.getElementById('copyTextBtn');
-      b.textContent = '已复制(仅文字)';
-      setTimeout(function(){ b.textContent = '复制文章内容'; }, 2000);
-    });
+  // Convert all img src to base64 data URIs and use text/html in clipboard
+  var imgs = wrapper.querySelectorAll('img');
+  var tasks = [];
+  imgs.forEach(function(img){
+    tasks.push(new Promise(function(resolve){
+      var canvas = document.createElement('canvas');
+      var ctx = canvas.getContext('2d');
+      var image = new Image();
+      image.crossOrigin = 'anonymous';
+      image.onload = function(){
+        canvas.width = image.naturalWidth;
+        canvas.height = image.naturalHeight;
+        ctx.drawImage(image, 0, 0);
+        try {
+          img.src = canvas.toDataURL('image/jpeg', 0.85);
+        } catch(e) {}
+        resolve();
+      };
+      image.onerror = function(){ resolve(); };
+      image.src = img.src;
+    }));
   });
+  
+  await Promise.all(tasks);
+  
+  var htmlContent = wrapper.innerHTML;
+  
+  // ClipboardItem with text/html
+  try {
+    var htmlBlob = new Blob([htmlContent], {type: 'text/html'});
+    await navigator.clipboard.write([new ClipboardItem({'text/html': htmlBlob})]);
+    b.textContent = '已复制！';
+  } catch(e){
+    // Fallback
+    navigator.clipboard.writeText(wrapper.textContent);
+    b.textContent = '已复制(仅文字)';
+  }
+  setTimeout(function(){ b.textContent = '复制文章内容'; }, 2000);
 }
 </script>
 </div>
