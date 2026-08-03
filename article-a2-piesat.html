@@ -73,7 +73,7 @@ function clean(){var c=document.documentElement.cloneNode(true);var w=c.querySel
 function copySource(){navigator.clipboard.writeText(clean()).then(function(){var b=document.getElementById('copyBtn');b.textContent='已复制！';b.classList.add('copied');setTimeout(function(){b.textContent='复制发布源码';b.classList.remove('copied');},2000);});}
 function viewSource(){var a=document.getElementById('srcArea');if(a.style.display==='block'){a.style.display='none';return;}a.value=clean();a.style.display='block';}
 function copyArticleText(){
-  var parts = [];
+  var wrapper = document.createElement('div');
   var body = document.querySelector('.a-body');
   if(!body) return;
   var children = body.children;
@@ -82,28 +82,62 @@ function copyArticleText(){
     var tag = el.tagName.toLowerCase();
     var text = el.textContent.trim();
     if(!text) continue;
+    
     if(tag === 'h2'){
-      parts.push(text);
-      parts.push('');
+      var h = document.createElement('h2');
+      h.textContent = text;
+      wrapper.appendChild(h);
     } else if(tag === 'p'){
-      parts.push(text);
-      parts.push('');
+      var p = document.createElement('p');
+      p.textContent = text;
+      wrapper.appendChild(p);
     } else if(el.classList.contains('a-fig')){
+      var img = el.querySelector('img');
       var cap = el.querySelector('.a-cap');
+      if(img){
+        var imgClone = document.createElement('img');
+        imgClone.src = img.src;
+        imgClone.alt = img.alt;
+        imgClone.style.maxWidth = '100%';
+        wrapper.appendChild(imgClone);
+      }
       if(cap){
-        parts.push(cap.textContent.trim());
-        parts.push('');
+        var c = document.createElement('p');
+        c.textContent = cap.textContent.trim();
+        c.style.fontSize = '12px';
+        c.style.color = '#888';
+        c.style.fontStyle = 'italic';
+        wrapper.appendChild(c);
       }
     } else if(el.classList.contains('a-insight')){
-      parts.push(text);
-      parts.push('');
+      var bq = document.createElement('blockquote');
+      bq.textContent = text;
+      wrapper.appendChild(bq);
     }
   }
-  var output = parts.join('\n');
-  navigator.clipboard.writeText(output).then(function(){
+  
+  // Write rich HTML to clipboard
+  var htmlContent = wrapper.innerHTML;
+  var textContent = wrapper.textContent;
+  
+  // Use Clipboard API with both HTML and plain text
+  var blob = new Blob([htmlContent], {type: 'text/html'});
+  var data = [new ClipboardItem({
+    'text/html': blob,
+    'text/plain': new Blob([textContent], {type: 'text/plain'})
+  })];
+  
+  navigator.clipboard.write(data).then(function(){
     var b = document.getElementById('copyTextBtn');
     b.textContent = '已复制！';
     setTimeout(function(){ b.textContent = '复制文章内容'; }, 2000);
+  }).catch(function(){
+    // Fallback: just copy HTML as text
+    navigator.clipboard.writeText(textContent).then(function(){
+      var b = document.getElementById('copyTextBtn');
+      b.textContent = '已复制(仅文字)';
+      setTimeout(function(){ b.textContent = '复制文章内容'; }, 2000);
+    });
   });
 }
 </script>
