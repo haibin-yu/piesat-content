@@ -77,6 +77,16 @@ async function copyArticleText(){
   b.textContent = '处理中...';
   
   var wrapper = document.createElement('div');
+  
+  // Add H1 title first
+  var h1 = document.querySelector('.a-head h1') || document.querySelector('h1');
+  if(h1){
+    var titleH = document.createElement('h2');
+    titleH.textContent = h1.textContent.trim();
+    titleH.style.textAlign = 'center';
+    wrapper.appendChild(titleH);
+  }
+  
   var body = document.querySelector('.a-body');
   if(!body) return;
   
